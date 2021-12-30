@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Temperature{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        const data = {
+            labels: {{ labels|json_encode|raw }},
+            datasets: [{
+                label: 'Temperature dataset',
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: {{ data|json_encode|raw }}
+            }]
+        };
+
+        const config = {
+            type: 'line',
+            data: data,
+            options: {}
+        };
+    </script>
+    <script>
+        const myChart = new Chart(
+            document.getElementById('myChart'),
+            config
+        );
+    </script>
+{% endblock %}
+
+{% set routes = {'temperature_by_hours': '1 hour', 'temperature_by_15minutes': '15 min', 'temperature_by_5minutes': '5 min', 'temperature_by_1minute': '1 min', 'temperature_by_seconds': 'sec'} %}
+
+{% block body %}
+    <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+        <h1>Temperature</h1>
+
+        <div class="btn-toolbar mb-2 mb-md-0">
+            <div class="btn-group mr-2">
+                {% for route, text in routes %}
+                    {% if route == app.request.get('_route') %}
+                        <button type="button" class="btn btn-sm btn-outline-secondary active">{{ text }}</button>
+                    {% else %}
+                        <a href="{{ path(route) }}" role="button" class="btn btn-sm btn-outline-secondary">{{ text }}</a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+
+    <div>
+        <canvas id="myChart"></canvas>
+    </div>
+{% endblock %}
