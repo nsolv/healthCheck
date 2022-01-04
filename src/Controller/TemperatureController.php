@@ -21,7 +21,7 @@ class TemperatureController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->redirectToRoute('temperature_by_1minute');
+        return $this->redirectToRoute('temperature_by_5minutes');
     }
 
     /**
@@ -113,7 +113,7 @@ class TemperatureController extends AbstractController
      */
     public function second(TemperatureRepository $temperatureRepository): Response
     {
-        $temperatures = $temperatureRepository->findAVGByPart(60);
+        $temperatures = $temperatureRepository->findAVGByPart(1);
 
         $labels = [];
         $data = [];

@@ -34,7 +34,7 @@ class TemperatureRepository extends ServiceEntityRepository
             GROUP BY part
         ";
         $stmt = $conn->prepare($sql);
-        $resultSet = $stmt->executeQuery(['groupBySecound' => $groupBySecound, 'limit' => $limit]);
+        $resultSet = $stmt->executeQuery(['groupBySecound' => $groupBySecound, 'limit' => $limit * $groupBySecound]);
 
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
