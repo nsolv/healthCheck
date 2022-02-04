@@ -16,7 +16,7 @@ set('writable_use_sudo', true);
 
 set('keep_releases', 3);
 
-set('symfony_env', 'dev');
+set('symfony_env', 'prod');
 set('env', [
     'SYMFONY_ENV' => get('symfony_env'),
 ]);
